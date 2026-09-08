@@ -1,0 +1,17 @@
+{
+  "name": "UCC CareHub",
+  "short_name": "CareHub",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#0b3a79",
+  "icons": [
+    {
+      "src": "ucc-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

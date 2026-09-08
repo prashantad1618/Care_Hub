@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0b3a79"/>
+<title>UCC CareHub</title>
+<link rel="manifest" href="manifest.json"/>
+<style>
+:root{
+  --navy:#0b3a79; --blue:#1697e5; --gold:#f5b800; --teal:#0c8d82;
+  --green:#14875c; --red:#d92d20; --orange:#e87919; --purple:#7a5af8;
+  --bg:#f4f7fb; --card:#fff; --line:#e4e7ec; --text:#101828; --muted:#667085;
+}
+*{box-sizing:border-box} html,body{margin:0;background:var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{min-height:100vh}
+.login-wrap{min-height:100vh;display:grid;grid-template-columns:minmax(440px,.98fr) minmax(520px,1.02fr);background:linear-gradient(135deg,#edf8ff 0%,#f8fbff 43%,#0f63bb 43%,#0b3a79 100%)}
+.login-panel{display:flex;align-items:center;justify-content:center;padding:28px 34px}
+.login-card{background:rgba(255,255,255,.97);border:1px solid rgba(208,213,221,.8);box-shadow:0 24px 70px rgba(11,58,121,.16);border-radius:28px;padding:26px 34px 22px;width:min(620px,100%)}
+.login-card img{display:block;width:150px;height:150px;object-fit:contain;margin:0 auto 4px}
+.login-card h1{text-align:center;margin:0;color:var(--navy);font-size:40px;line-height:1.05;letter-spacing:-.8px}.login-card h1 span{color:#0b65d8}
+.login-card .sub{text-align:center;color:#183153;margin:7px 0 18px;font-size:18px;line-height:1.35}.login-card .sub b{font-weight:700}
+.login-card .field{margin:9px 0}.login-card .field label{font-size:14px;color:#19345b;font-weight:650}.login-card .field input{padding:14px 15px;border-radius:12px;border:1px solid #bfd0e5;box-shadow:inset 0 1px 2px rgba(16,24,40,.02)}
+.login-card .field input:focus{outline:none;border-color:#1570ef;box-shadow:0 0 0 3px rgba(21,112,239,.12)}
+.login-card .btn-primary{min-height:56px;border-radius:12px;font-size:17px;background:linear-gradient(90deg,#0b55c9,#1697e5);box-shadow:0 10px 22px rgba(11,85,201,.2)}
+.role-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}.role-choice{border:1px solid #cbd7e6;background:#fff;border-radius:14px;padding:13px 10px;text-align:center;min-height:72px;font-weight:650;color:#203a60}.role-choice:before{display:block;font-size:23px;margin-bottom:5px}.role-choice[data-role="staff"]::before{content:"👤"}.role-choice[data-role="manager"]::before{content:"👥"}.role-choice[data-role="admin"]::before{content:"🛡️"}.role-choice.active{border:2px solid #1570ef;background:linear-gradient(180deg,#eff8ff,#f8fbff);color:#0b55c9;font-weight:800}
+.forgot-row{display:flex;justify-content:flex-end;margin-top:-2px;margin-bottom:8px}.forgot-row button{border:0;background:transparent;color:#0b55c9;font-weight:700;padding:2px 0}.forgot-row button:hover{text-decoration:underline}
+.login-divider{display:flex;align-items:center;gap:12px;color:#64748b;font-size:12px;margin:12px 0}.login-divider:before,.login-divider:after{content:"";height:1px;background:#d8e2ee;flex:1}
+.google-btn{width:100%;border:1px solid #cbd7e6;background:#fff;border-radius:12px;min-height:48px;color:#1f3555;font-weight:700}.google-btn:disabled{opacity:.52;cursor:not-allowed}.google-mark{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:conic-gradient(#4285f4 0 25%,#34a853 0 50%,#fbbc05 0 75%,#ea4335 0);color:#fff;font-size:12px;margin-right:9px}
+.tagline{text-align:center;color:#0b55c9;font-weight:800;margin-top:13px;font-size:17px}.secure-note{text-align:center;color:#65758b;font-size:12px;margin-top:3px}.trust-row{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid #e3eaf2;color:#27446d;font-size:11px}.trust-row span{white-space:nowrap}
+.hero-panel{position:relative;overflow:hidden;background:linear-gradient(135deg,#146ec6,#083a79)}
+.hero-panel:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,rgba(255,255,255,.16),transparent 28%),linear-gradient(135deg,transparent 30%,rgba(255,255,255,.05) 55%,transparent 76%)}
+.hero-panel:after{content:"";position:absolute;inset:auto -12% -16% 22%;height:48%;background:radial-gradient(ellipse at center,rgba(255,255,255,.10),transparent 68%);transform:rotate(-8deg)}
+.hero-content{position:relative;z-index:1;color:white;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;height:100%;max-width:760px;margin:auto}
+.hero-content h2{font-size:52px;line-height:1.05;margin:0 0 14px;letter-spacing:-1.6px}.hero-content p{font-size:18px;max-width:650px;line-height:1.6;margin:0}
+.hero-meta{display:flex;gap:14px;justify-content:flex-end;font-size:13px;margin-bottom:34px;opacity:.92}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px}.feature{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.2);padding:14px 16px;border-radius:15px;backdrop-filter:blur(8px);font-weight:650}
+.hero-values{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px;text-align:center}.hero-value{padding:8px}.hero-value b{display:grid;place-items:center;width:48px;height:48px;margin:0 auto 8px;border-radius:50%;background:rgba(255,255,255,.13);font-size:24px;border:1px solid rgba(255,255,255,.16)}.hero-value span{font-size:14px;font-weight:650}.hero-signoff{text-align:right;margin-top:22px;font-size:20px;font-style:italic;opacity:.9}
+.field{display:grid;gap:6px;margin:10px 0}.field label{font-size:12px;color:#475467}.field input,.field select,.field textarea{border:1px solid #d0d5dd;border-radius:12px;padding:12px;background:#fff;width:100%}.field textarea{min-height:100px;resize:vertical}
+.btn{border:none;border-radius:12px;padding:11px 14px}.btn-primary{background:linear-gradient(90deg,var(--navy),var(--blue));color:#fff;font-weight:700}.btn-secondary{background:#eef2f6;color:#344054}.btn-green{background:var(--green);color:#fff}.btn-danger{background:#fef3f2;color:var(--red)}
+.role-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.role-choice{border:1px solid #d0d5dd;background:#fff;border-radius:12px;padding:12px;text-align:center}.role-choice.active{border-color:var(--blue);background:#eff8ff;color:var(--navy);font-weight:700}
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.sidebar{background:#fff;border-right:1px solid var(--line);padding:14px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 6px 18px}.brand img{width:52px;height:52px;object-fit:contain}.brand h2{margin:0;color:var(--navy);font-size:20px}.brand small{color:var(--muted)}
+.nav{display:grid;gap:5px}.nav button{border:none;background:transparent;text-align:left;padding:10px 12px;border-radius:10px;color:#344054}.nav button.active,.nav button:hover{background:#eff8ff;color:var(--navy);font-weight:700}.nav .badge{float:right;background:var(--red);color:#fff;border-radius:999px;font-size:10px;padding:2px 6px}
+.main{min-width:0}.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;gap:12px}.topbar .spacer{flex:1}.mode{border:1px solid #d0d5dd;border-radius:10px;padding:8px 10px;background:#fff}.userchip{display:flex;align-items:center;gap:9px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#eaf2ff;color:var(--navy);font-weight:800}
+.content{padding:18px}.view{display:none}.view.active{display:block}
+.hero-card{background:linear-gradient(135deg,#0b3a79,#1697e5);color:#fff;border-radius:20px;padding:20px;margin-bottom:14px;display:flex;align-items:center;gap:14px}.hero-card h1{margin:0 0 4px;font-size:26px}.hero-card p{margin:0;opacity:.9}
+.grid{display:grid;gap:14px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.card h2,.card h3{margin:0 0 10px}.kpi b{display:block;font-size:28px}.kpi span{color:var(--muted);font-size:12px}
+.item{padding:11px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}
+.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;background:#eef2f6}.ok{background:#ecfdf3;color:#027a48}.warn{background:#fffaeb;color:#b54708}.bad{background:#fef3f2;color:#b42318}.info{background:#eff8ff;color:#175cd3}.purple{background:#f4f3ff;color:#5925dc}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:10px;border-bottom:1px solid var(--line);font-size:13px;text-align:left;white-space:nowrap}th{background:#f9fafb;color:#475467}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px;min-height:86px}.quick .ico{font-size:24px;display:block;margin-bottom:7px}
+.metricbar{height:9px;background:#eef2f6;border-radius:999px;overflow:hidden}.metricbar span{height:100%;display:block;background:linear-gradient(90deg,var(--navy),var(--blue))}
+.online-card{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.online-dot{width:12px;height:12px;border-radius:50%;background:#12b76a;box-shadow:0 0 0 5px rgba(18,183,106,.12);animation:pulse 1.8s infinite}
+.shift-live{background:linear-gradient(135deg,#ecfdf3,#f6fffa);border:1px solid #abefc6;border-radius:16px;padding:16px}
+.shift-off{background:linear-gradient(135deg,#f9fafb,#fff);border:1px solid var(--line);border-radius:16px;padding:16px}
+.shift-clock{font-size:30px;font-weight:800;color:#027a48;font-variant-numeric:tabular-nums}
+.shift-actions{display:flex;gap:8px;flex-wrap:wrap}
+.client-focus{background:#f8fbff;border:1px solid #dbeafe;border-radius:14px;padding:14px}
+.client-summary-card{display:flex;flex-direction:column;gap:10px}.client-summary-card h3{margin:0}.client-section{display:grid;gap:6px}.client-tags{display:flex;flex-wrap:wrap;gap:6px}.client-tag{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:700;background:#eff8ff;color:#175cd3;border:1px solid #b2ddff}.client-tag.alert{background:#fff4ed;color:#b42318;border-color:#fecdca}.client-tag.more{background:#f2f4f7;color:#475467;border-color:#d0d5dd}.client-mustknow{background:#fffaeb;border:1px solid #fedf89;border-radius:12px;padding:10px;color:#7a2e0e}.client-mustknow div{margin-top:4px;font-size:13px}.client-check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.client-check{display:flex;align-items:flex-start;gap:7px;border:1px solid var(--line);border-radius:10px;padding:9px;background:#fff}.client-check input{width:auto;margin-top:2px}.client-profile{display:grid;gap:14px}.client-profile-hero{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,#eff8ff,#fff);border:1px solid #b2ddff;border-radius:14px;padding:14px}.client-profile-hero h2{margin:3px 0 0}.client-priority{background:#fff7ed;border:1px solid #fdba74;border-radius:14px;padding:14px}.client-priority h3{margin:0 0 6px;color:#9a3412}.client-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.client-profile-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.client-profile-box h3{margin:0 0 8px;font-size:15px}.client-profile-box p{margin:6px 0;white-space:pre-wrap}.client-profile-box.wide{grid-column:1/-1}
+.roster-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.roster-tabs button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px}
+.roster-tabs button.active{background:#eff8ff;color:var(--navy);border-color:#b2ddff;font-weight:700}
+.roster-maker-table{min-width:1280px}
+.roster-maker-table th,.roster-maker-table td{vertical-align:top}
+.shift-cell{display:grid;gap:5px;min-width:145px;padding:5px;border-radius:10px}
+.shift-cell select,.shift-cell input{width:100%;border:1px solid #d0d5dd;border-radius:8px;padding:6px;font-size:12px;background:#fff}
+.shift-times{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.shift-label{font-size:10px;color:var(--muted)}
+.shift-day{background:#ecfdf3}.shift-evening{background:#eff8ff}.shift-night{background:#f4f3ff}.shift-sleepover{background:#fff1f3}.shift-custom{background:#fff7ed}.shift-off{background:#f2f4f7}
+
+
+
+.settings-toggle{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;color:#344054}.settings-toggle:last-child{border-bottom:0}.settings-toggle input{width:auto;margin-top:3px;transform:scale(1.15)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(18,183,106,.10)}50%{box-shadow:0 0 0 9px rgba(18,183,106,.02)}}
+.offline-dot{width:12px;height:12px;border-radius:50%;background:#98a2b3}
+.live-time{font-variant-numeric:tabular-nums;font-weight:700;color:#027a48}
+
+/* Care documentation upgrade */
+.care-page{display:grid;gap:16px}.care-form-card{padding:18px}.care-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.care-form-grid .wide{grid-column:1/-1}.care-form-card .field{margin:0}.care-form-card textarea{min-height:150px}.record-list{display:grid;gap:10px}.record-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}.record-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.record-title{font-weight:800;color:#1d2939}.record-body{white-space:pre-wrap;margin:10px 0;color:#344054;line-height:1.5}.record-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.btn-view{background:#eff8ff;color:#175cd3}.btn-edit{background:#fffaeb;color:#b54708}.form-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.care-empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #d0d5dd;border-radius:12px}.med-outcome{min-width:90px;text-align:center}.care-banner{background:#fffaeb;border:1px solid #fedf89;border-radius:14px;padding:13px;color:#7a2e0e}.compact-field{border:1px solid #d0d5dd;border-radius:12px;padding:12px;background:#fff;width:100%}
+@media(max-width:760px){.care-form-grid{grid-template-columns:1fr}.care-form-grid .wide{grid-column:auto}.care-form-card{padding:14px}.record-head{flex-direction:column}.record-actions .btn{flex:1;min-width:84px}.form-actions .btn{flex:1}.care-page{gap:12px}}
+
+.mobile-nav{display:none}
+.modal{position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:50;display:grid;place-items:center;padding:16px}.modal-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;padding:18px}
+@media(max-width:980px){.g6{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}.quick{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:980px){.login-wrap{grid-template-columns:1fr}.hero-panel{display:none}.login-panel{padding:18px}.login-card{width:min(640px,100%)}}
+@media(max-width:760px){
+ .login-wrap{grid-template-columns:1fr;background:linear-gradient(180deg,#edf8ff,#fff)}.hero-panel{display:none}.login-panel{padding:10px}.login-card{padding:18px 16px;border-radius:20px}.login-card img{width:105px;height:105px}.login-card h1{font-size:30px}.login-card .sub{font-size:15px}.role-choice{min-height:64px;padding:10px 6px;font-size:12px}.role-choice:before{font-size:19px}.trust-row{gap:8px;font-size:10px}
+ .shell{grid-template-columns:1fr}.sidebar{display:none}.content{padding:12px 12px 88px}.topbar{padding:10px 12px}.topbar .brand-mini{display:none}.topbar .search{display:none}
+ .g2,.g3,.g4,.g6{grid-template-columns:1fr}.hero-card{padding:16px}.hero-card h1{font-size:21px}.client-check-grid,.client-profile-grid{grid-template-columns:1fr}
+ .mobile-nav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));justify-content:space-around}
+ .mobile-nav button{border:none;background:transparent;font-size:10px;color:#667085;display:grid;place-items:center;gap:2px}.mobile-nav button b{font-size:18px}.mobile-nav button.active{color:var(--navy);font-weight:700}
+}
+
+.export-actions{display:flex;gap:7px;align-items:center}.btn-export{border:1px solid #cbd5e1;background:#fff;color:#0b3a79;border-radius:10px;padding:8px 10px;font-weight:700;font-size:12px}.btn-export:hover{background:#eff8ff}.btn-export.pdf{color:#b42318}.btn-export.excel{color:#027a48}
+@media(max-width:760px){.topbar .export-actions{display:none}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+<script defer src="config.js?v=shiftcompliance-handover-geofence-20260907-v1"></script>
+<script defer src="app.js?v=shiftcompliance-handover-geofence-20260907-v1"></script>
+</head>
+<body>
+<div id="login" class="login-wrap">
+  <div class="login-panel">
+    <div class="login-card">
+      <img src="ucc-logo.png" alt="Unite Canberra Care logo"/>
+      <h1>UCC <span>CareHub</span></h1>
+      <div class="sub">Aged Care & Disability Support<br><b>People • Support • Better Lives</b></div>
+      <div class="field"><label>Email address</label><input id="loginEmail" type="email" autocomplete="username" placeholder="Enter your email address"/></div>
+      <div class="field"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Enter your password"/></div>
+      <div class="forgot-row"><button type="button" onclick="alert('Please contact your CareHub administrator to reset your password.')">Forgot password?</button></div>
+      <div class="role-row" id="loginRoles">
+        <button class="role-choice" data-role="staff">Support Worker</button>
+        <button class="role-choice active" data-role="manager">Manager</button>
+        <button class="role-choice" data-role="admin">Admin</button>
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-top:13px" onclick="doLogin()">Login</button>
+      <div class="login-divider">OR</div>
+      <button class="google-btn" type="button" disabled title="Google sign-in can be enabled after OAuth is configured"><span class="google-mark">G</span>Sign in with Google</button>
+      <div class="tagline">Care Today, Brighter Tomorrows</div>
+      <div class="secure-note">Secure • Reliable • Always Here for Care</div>
+      <div class="trust-row"><span>🛡️ NDIS Compliant</span><span>🔒 Secure & Private</span><span>👥 Trusted Team</span><span>💙 Quality Care</span></div>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="hero-content">
+      <div class="hero-meta"><span>📍 Canberra, ACT</span><span>•</span><span>UCC CareHub</span></div>
+      <h2>One platform<br>for better care.</h2>
+      <p>Manage staff, clients, rosters, health records, progress notes, incidents, compliance and handover — with Managers able to switch into Support Worker mode for their own rostered shifts.</p>
+      <div class="feature-grid">
+        <div class="feature">👥 Staff & Client Management</div>
+        <div class="feature">📅 Rosters & Timesheets</div>
+        <div class="feature">📝 Progress Notes & Handover</div>
+        <div class="feature">❤️ Medication & Health Records</div>
+        <div class="feature">⚠️ Incidents & Reports</div>
+        <div class="feature">✅ Training & Compliance</div>
+      </div>
+      <div class="hero-values">
+        <div class="hero-value"><b>🤝</b><span>Support<br>People</span></div>
+        <div class="hero-value"><b>👥</b><span>Build<br>Communities</span></div>
+        <div class="hero-value"><b>♡</b><span>Create<br>Better Lives</span></div>
+      </div>
+      <div class="hero-signoff">Together We Care ♡</div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><img src="ucc-logo.png"><div><h2>UCC CareHub</h2><small>People • Support • Better Lives</small></div></div>
+      <div class="nav" id="sideNav"></div>
+      <div class="card" style="margin-top:18px;background:#f8fbff"><b>Care Today,<br>Brighter Tomorrows</b><div class="muted" style="margin-top:6px">UCC CareHub v1.2 • Availability + Roster Actions</div></div>
+    </aside>
+
+    <section class="main">
+      <div class="topbar">
+        <div class="brand-mini"><b id="pageTitle">Dashboard</b></div>
+        <div class="spacer"></div>
+        <input class="search" placeholder="Search..." style="border:1px solid #d0d5dd;border-radius:10px;padding:8px 10px">
+        <select id="modeSwitch" class="mode" onchange="switchMode(this.value)">
+          <option value="manager">Manager Mode</option><option value="staff">Support Worker Mode</option>
+        </select>
+        <div class="export-actions" title="Download the current CareHub table/list">
+          <button class="btn-export pdf" type="button" onclick="exportActivePage('pdf')">⬇ PDF</button>
+          <button class="btn-export excel" type="button" onclick="exportActivePage('excel')">⬇ Excel</button>
+        </div>
+        <div class="userchip"><div class="avatar">PA</div><div><b>Prashant</b><div class="muted" id="roleLabel">Manager</div></div></div>
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+      </div>
+
+      <main class="content">
+        <section id="dashboard" class="view active"></section>
+        <section id="online" class="view"></section>
+        <section id="staff" class="view"></section>
+        <section id="clients" class="view"></section>
+        <section id="sites" class="view"></section>
+        <section id="roster" class="view"></section>
+        <section id="availability" class="view"></section>
+        <section id="timesheets" class="view"></section>
+        <section id="notes" class="view"></section>
+        <section id="medication" class="view"></section>
+        <section id="health" class="view"></section>
+        <section id="handover" class="view"></section>
+        <section id="incidents" class="view"></section>
+        <section id="compliance" class="view"></section>
+        <section id="documents" class="view"></section>
+        <section id="notifications" class="view"></section>
+        <section id="reports" class="view"></section>
+        <section id="settings" class="view"></section>
+      </main>
+    </section>
+  </div>
+  <div class="mobile-nav" id="mobileNav"></div>
+</div>
+
+<div id="modal" class="modal hidden"><div class="modal-box"><div class="row between"><h2 id="modalTitle">Add</h2><button class="btn btn-secondary" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+
+
+</body>
+</html>
